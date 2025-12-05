@@ -46,12 +46,12 @@ class EventoView(generics.CreateAPIView):
             if responsable_id:
                 # Intentar obtener como Maestro primero
                 try:
-                    maestro = Maestros.objects.get(id=responsable_id) ##-------------------------------
+                    maestro = Maestros.objects.get(user_id=responsable_id) ##-------------------------------
                     responsable = maestro.user
                 except Maestros.DoesNotExist:
                     # Si no es maestro, intentar como Admin
                     try:
-                        admin = Administradores.objects.get(id=responsable_id)
+                        admin = Administradores.objects.get(user_id=responsable_id)
                         responsable = admin.user
                     except Administradores.DoesNotExist:
                         return Response(
