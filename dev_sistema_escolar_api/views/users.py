@@ -36,8 +36,9 @@ class AdminView(APIView):
         return []  # POST no requiere autenticación
 
     #Obtener usuario por ID
-    permission_classes = (permissions.IsAuthenticated,)
+    
     def get(self, request, *args, **kwargs):
+        permission_classes = (permissions.IsAuthenticated,)
         admin = get_object_or_404(Administradores, id = request.GET.get("id"))
         admin = AdminSerializer(admin, many=False).data
         # Si todo es correcto, regresamos la información
