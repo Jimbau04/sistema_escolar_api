@@ -103,7 +103,7 @@ class MaestroView(generics.CreateAPIView):
         permission_classes = (permissions.IsAuthenticated,)
         maestro = get_object_or_404(Maestros, id=request.data["id"])
         
-        maestro.matricula=request.data["matricula"]
+        maestro.matricula=request.data["id_trabajador"]
         maestro.telefono=request.data["telefono"]
         maestro.rfc=request.data["rfc"].upper()
         maestro.fecha_nacimiento=request.data["fecha_nacimiento"]
