@@ -37,7 +37,7 @@ MIDDLEWARE = [
 
 # Configuración de CORS: define orígenes permitidos y quita CORS_ORIGIN_ALLOW_ALL
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:4200',
+    'http://localhost:4200','https://sistema-escolar-jimbau.vercel.app/',
 ]
 CORS_ALLOW_CREDENTIALS = True
 
@@ -75,13 +75,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dev_sistema_escolar_api.wsgi.application'
 
+DATABASE_URL = os.environ.get("DATABASE_URL")
+
 DATABASES = {
-    "default": dj_database_url.config(
-        default=os.environ.get("DATABASE_URL"),
-        conn_max_age=600,
-        ssl_require=True,
-    )
+    "default": dj_database_url.parse(DATABASE_URL, conn_max_age=600),
 }
+
+# --- FIX PARA AIVEN ---
+# django-database-url pasa 'ssl-mode', pero MySQLclient espera 'ssl_mode'
+opts = DATABASES["default"].get("OPTIONS", {})
+
+if "ssl-mode" in opts:
+    opts["ssl_mode"] = opts.pop("ssl-mode")  # rename
+    opts["ssl"] = {"ssl_mode": opts["ssl_mode"]}  # requerido por mysqlclient
+
+DATABASES["default"]["OPTIONS"] = opts
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
