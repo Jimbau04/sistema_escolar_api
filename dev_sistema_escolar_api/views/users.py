@@ -13,6 +13,7 @@ from django.contrib.auth.models import Group, User
 from rest_framework.views import APIView
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from rest_framework.permissions import AllowAny
 
 @method_decorator(csrf_exempt, name='dispatch')
 class AdminAll(generics.CreateAPIView):
@@ -25,15 +26,15 @@ class AdminAll(generics.CreateAPIView):
         return Response(lista, 200)
 
 @method_decorator(csrf_exempt, name='dispatch')
-class AdminView(APIView):
+class AdminView(generics.CreateAPIView):
     serializer_class = UserSerializer
 
      # Permisos por método (sobrescribe el comportamiento default)
     # Verifica que el usuario esté autenticado para las peticiones GET, PUT y DELETE
     def get_permissions(self):
-        if self.request.method in ['GET', 'PUT', 'DELETE']:
-            return [permissions.IsAuthenticated()]
-        return []  # POST no requiere autenticación
+        if self.request.method in ["POST"]:
+            return [AllowAny()]
+        return [permissions.IsAuthenticated()]
 
     #Obtener usuario por ID
     
