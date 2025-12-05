@@ -10,7 +10,11 @@ from rest_framework import generics
 from rest_framework import status
 from rest_framework.response import Response
 from django.contrib.auth.models import Group, User
+from rest_framework.views import APIView
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
+@method_decorator(csrf_exempt, name='dispatch')
 class AdminAll(generics.CreateAPIView):
     #Esta función es esencial para todo donde se requiera autorización de inicio de sesión (token)
     permission_classes = (permissions.IsAuthenticated,)
@@ -20,6 +24,7 @@ class AdminAll(generics.CreateAPIView):
         lista = AdminSerializer(admin, many=True).data
         return Response(lista, 200)
 
+@method_decorator(csrf_exempt, name='dispatch')
 class AdminView(generics.CreateAPIView):
     serializer_class = UserSerializer
 
@@ -117,6 +122,7 @@ class AdminView(generics.CreateAPIView):
         except Exception as e:
             return Response({"details":"Algo pasó al eliminar: " + str(e)},400)
 
+@method_decorator(csrf_exempt, name='dispatch')
 class TotalUsers(generics.CreateAPIView):
     def get(self, request, *args, **kwargs):
         # TOTAL ADMINISTRADORES
