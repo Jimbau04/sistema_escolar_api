@@ -12,7 +12,7 @@ SECRET_KEY = '-_&+lsebec(whhw!%n@ww&1j=4-^j_if9x8$q778+99oz&!ms2'
 
 DEBUG = True  # en desarrollo
 
-ALLOWED_HOSTS = ["https://sistema-escolar-api.onrender.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["sistema-escolar-api-1wpx.onrender.com", "localhost", "127.0.0.1"]
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,6 +43,9 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200","https://sistema-escolar-jimbau.vercel.app",
 ]
 CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = [
+    "https://sistema-escolar-jimbau.vercel.app",
+]
 
 ROOT_URLCONF = 'dev_sistema_escolar_api.urls'
 
