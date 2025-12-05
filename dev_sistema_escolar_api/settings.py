@@ -1,6 +1,9 @@
 import os
 
 import dj_database_url
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -75,21 +78,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dev_sistema_escolar_api.wsgi.application'
 
-DATABASE_URL = os.environ.get("DATABASE_URL")
-
 DATABASES = {
-    "default": dj_database_url.parse(DATABASE_URL, conn_max_age=600),
+    "default":{
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME', 'dev_sistema_escolar_db'),
+        'USER': os.getenv('DB_USER', 'postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD', '123456789'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '5432'),
+        'CONN_MAX_AGE': 300,
+    }
+
 }
-
-# --- FIX PARA AIVEN ---
-# django-database-url pasa 'ssl-mode', pero MySQLclient espera 'ssl_mode'
-opts = DATABASES["default"].get("OPTIONS", {})
-
-if "ssl-mode" in opts:
-    opts["ssl_mode"] = opts.pop("ssl-mode")  # rename
-    opts["ssl"] = {"ssl_mode": opts["ssl_mode"]}  # requerido por mysqlclient
-
-DATABASES["default"]["OPTIONS"] = opts
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
