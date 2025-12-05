@@ -49,6 +49,27 @@ CSRF_TRUSTED_ORIGINS = [
 
 ROOT_URLCONF = 'dev_sistema_escolar_api.urls'
 
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "origin",
+    "dnt",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "OPTIONS",
+]
+
 
 
 import os
