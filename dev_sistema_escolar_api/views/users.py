@@ -25,7 +25,7 @@ class AdminAll(generics.CreateAPIView):
         return Response(lista, 200)
 
 @method_decorator(csrf_exempt, name='dispatch')
-class AdminView(generics.CreateAPIView):
+class AdminView(APIView):
     serializer_class = UserSerializer
 
      # Permisos por método (sobrescribe el comportamiento default)
