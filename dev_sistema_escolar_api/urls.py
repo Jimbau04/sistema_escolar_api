@@ -31,9 +31,9 @@ urlpatterns = [
         path('token/', auth.CustomAuthToken.as_view()),
     #Logout
         path('logout/', auth.Logout.as_view()), 
-
-        path('eventos/', EventoView.as_view()),        # POST crear, GET por id, PUT actualizar, DELETE
-        
+    #Eventos Data
+        path('eventos/', EventoView.as_view()),   
+    #Eventos data 
         path('lista-eventos/', EventosAll.as_view()),
        
         #Total Users
